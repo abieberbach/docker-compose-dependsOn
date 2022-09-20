@@ -29,6 +29,12 @@ func createCheckTasksFromEnv(env *config.Environment) []CheckTask {
 	for _, url := range env.WaitUrls {
 		result = append(result, NewUrlCheck(strings.TrimSpace(url)))
 	}
+	for _, redisKey := range env.WaitRedisKeys {
+		result = append(result, NewRedisCheck(strings.TrimSpace(redisKey), env.WaitRedisAddr, env.WaitRedisPassword, env.WaitRedisDB))
+	}
+	for _, dbKey := range env.WaitDBKeys {
+		result = append(result, NewDatabaseCheck(strings.TrimSpace(dbKey), env.WaitDBDriver, env.WaitDBUrl, env.WaitDBUser, env.WaitDBPassword))
+	}
 	return result
 }
 
